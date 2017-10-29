@@ -1,0 +1,50 @@
+﻿@model MVC.UI.Repo.Models.StoreListViewModel
+@{
+    ViewBag.Title = "Index";
+}
+<h2>Incoming Orders</h2>
+<hr />
+
+<div>
+    <table class="table table-responsive">
+        <tr class="active">
+            <td>Product Name</td>       
+            <td>Order Date</td>
+            <td>Quantity</td>
+            <td>Customer Name</td>
+            <td>Email</td>
+            <td>Address</td>
+            <td></td>
+            <td></td>
+        </tr>
+        @foreach (var store in Model.OrderInStore)
+        {
+            <tr>
+                <td>@store.OrderDetail.Product.ProductName</td>
+                <td>@store.OrderDetail.Order.OrderDate</td>
+                <td>@store.OrderDetail.Quantity</td>
+                <td>@(store.OrderDetail.Order.Customer.FirstName+" "+ store.OrderDetail.Order.Customer.LastName)</td>
+                <td>@store.OrderDetail.Order.Customer.Email</td>
+                <td>@store.OrderDetail.Order.Customer.Address</td>
+                <td>
+                    @Html.ActionLink("Process", "InProcess", "Index", new { ID = store.ID }, new { @class = "btn btn-xs btn-success" })
+                </td>
+                <td>
+                    @Html.ActionLink("Delete", "Delete", "Index", new { ID = store.ID }, new { @class = "btn btn-xs btn-danger" })
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
+<div>
+    <ul class="pagination">
+        @for (int i = 1; i <= Model.PageCount; i++)
+        {
+            <li class="@(i == Model.CurrentPage ? "Active" : "")">
+                <a href="/Home/Index?Page=@i">@i</a>
+            </li>
+        }
+    </ul>
+</div>
+

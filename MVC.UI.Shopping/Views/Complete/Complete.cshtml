@@ -1,0 +1,31 @@
+﻿@model MVC.UI.Shopping.Models.CustomerViewModel
+@{
+    ViewBag.Title = "Complete";
+}
+
+<form asp-controller="Complete" asp-action="Complete" method="post">
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        @Html.TextBoxFor(x => x.Customers.FirstName, new { @class = "form-control", placeholder = "Ad", aria_describedby = "txtAd" })
+    </div>
+
+    <div class="form-group">
+        @Html.TextBoxFor(x => x.Customers.LastName, new { @class = "form-control", placeholder = "Soyad", aria_describedby = "txtSoyad" })
+    </div>
+
+    <div class="form-group">
+        @Html.TextBoxFor(x => x.Customers.Email, new { @class = "form-control", placeholder = "Email", aria_describedby = "txtEmail" })
+    </div>
+
+    <div class="form-group">
+        @Html.TextBoxFor(x => x.Customers.Address, new { @class = "form-control", placeholder = "Address", aria_describedby = "txtAddress" })
+    </div>
+
+    <div class="input-group">
+        <input type="submit" class="btn btn-success" value="Complete shopping" />
+    </div>
+</form>
+
+
+

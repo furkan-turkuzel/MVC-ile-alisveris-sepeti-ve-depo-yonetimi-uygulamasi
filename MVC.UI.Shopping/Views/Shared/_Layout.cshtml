@@ -1,0 +1,59 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/style.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="col-md-12">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+
+                    <a class="navbar-brand" asp-controller="Product" asp-action="Index">Shopping</a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Basket <span class="caret"></span></a>
+                            @{Html.RenderAction("Basket", "Basket"); }
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="col-md-2">
+        @if (TempData["category"] != null)
+        {
+            Html.RenderAction("CategoryList", "Category");
+        }
+    </div>
+    <div class="col-md-10">
+        @if (TempData["message"] != null)
+        {
+            <div class="alert alert-@TempData["status"]">
+                @TempData["message"]
+                @if (TempData["complete"] != null)
+                {
+                    <div class="text-right">
+                        <a href="@Url.Action("Index", "Home")" class="btn btn-sm btn-primary">Continue Shopping</a>
+                        <a href="@Url.Action("List", "Basket")" class="btn btn-sm btn-info">Show All Orders</a>
+                    </div>
+                }
+            </div>
+        }
+        @RenderBody()
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

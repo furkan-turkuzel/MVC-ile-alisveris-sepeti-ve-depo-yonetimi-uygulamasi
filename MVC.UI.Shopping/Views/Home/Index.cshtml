@@ -1,0 +1,38 @@
+﻿@model MVC.UI.Shopping.Models.ProductListViewModel
+
+@{
+    ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div>
+    <table class="table table-responsive">
+        <tr class="active">
+            <td>Product Name</td>
+            <td>Unit Price</td>
+            <td>Quantity</td>
+            <td></td>
+        </tr>
+        @foreach (var Product in Model.Products)
+        {
+            <tr>
+                <td>@Product.ProductName</td>
+                <td>@Product.UnitPrice</td>
+                <td>@Product.UnitInStock</td>
+                <td>
+                    @Html.ActionLink("Add To Basket", "AddToBasket", "Basket", new { ID = Product.ID},new { @class="btn btn-xs btn-success"})
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
+<div>
+    <ul class="pagination">
+        @for (int i = 1; i <= Model.PageCount; i++)
+        {
+            <li class ="@(i == Model.CurrentPage ? "Active" : "")">
+                <a href="/Home/Index?Page=@i&category=@Model.CurrentCategory">@i</a>
+            </li>
+        }
+    </ul>
+</div>

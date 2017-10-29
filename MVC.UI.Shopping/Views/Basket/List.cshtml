@@ -1,0 +1,134 @@
+﻿@model MVC.UI.Shopping.Models.BasketOrderDetailsViewModel
+@{
+    ViewBag.Title = "List";
+}
+<div class="panel">
+    <div class="panel-title">Senders To Warehouse</div>
+    <div class="panel-body">
+        <table class="table">
+            <tr class="active">
+                <td>Product Name</td>
+                <td>Unit Price</td>
+                <td>Units In Stock</td>
+                <td>Quantity</td>
+                <td></td>
+            </tr>
+            @{var total = 0;
+                if (Model.OrderDetail != null)
+                {
+                    foreach (var item in Model.OrderDetail)
+                    {
+                        if (item.Order.IsActive == true)
+                        {
+                            <tr>
+                                <td>@item.Product.ProductName</td>
+                                <td>@item.Product.UnitPrice</td>
+                                <td>@item.Product.UnitInStock</td>
+                                <td>@item.Quantity</td>
+                                <td class="text-right">
+                                    <a href="@Url.Action("CancelOrder", "Basket", new { ID = item.ID})" class="btn btn-xs btn-danger">
+                                        <span class="glyphicon glyphicon-remove">
+                                            Cancel the Order
+                                        </span>
+                                    </a>
+                                </td>
+                            </tr>
+                            total += Convert.ToInt32(item.UnitPrice);
+                        }
+
+                    }
+                }
+            }
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <h3>Total</h3>
+                    </td>
+                    <td class="text-right">
+                        <h3>
+                            <b>
+                                @total
+                            </b>
+                        </h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="text-right"></td>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+
+
+    <hr />
+
+    <div class="panel">
+        <div class="panel-title">In The Basket</div>
+        <div class="panel-body">
+            <table class="table">
+                <tr class="active">
+                    <td>Product Name</td>
+                    <td>Unit Price</td>
+                    <td>Units In Stock</td>
+                    <td>Quantity</td>
+                    <td></td>
+                </tr>
+                @foreach (var item in Model.basket.AddedProducts)
+            {
+                    <tr>
+                        <td>@item.Product.ProductName</td>
+                        <td>@item.Product.UnitPrice</td>
+                        <td>@item.Product.UnitInStock</td>
+                        <td>@item.Quantity</td>
+                        <td class="text-right">
+                            <a href="@Url.Action("RemoveToBasket","Basket",new {ID = item.Product.ID })" class="btn btn-xs btn-danger">
+                                <span class="glyphicon glyphicon-remove">
+                                    Remove from Basket
+                                </span>
+                            </a>
+                        </td>
+                    </tr>
+                }
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <h3>Total</h3>
+                    </td>
+                    <td class="text-right">
+                        <h3>
+                            <b>
+                                @Model.basket.Total
+                            </b>
+                        </h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <a href="@Url.Action("Index","Home")" class="btn btn-primary">
+                            <span class="glyphicon glyphicon-shopping-cart"></span> Continue Shopping
+                        </a>
+                    </td>
+                    <td class="text-right">
+                        <a href="@Url.Action("Complete","Complete")" class="btn btn-success">
+                            <span class="glyphicon glyphicon-shopping-play">
+                            </span>
+                            Go to checkout
+                        </a>
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+    </div>
